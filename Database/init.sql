@@ -22,11 +22,14 @@ create table CubeType (
 create table Solve (
    id int(11) AUTO_INCREMENT primary key,
    ownerId int(11) not null,
+   cubeTypeId int(11) not null,
    scramble VARCHAR(2048) not null,
    time int(11) not null default 0,
    whenSolved DATETIME not null default NOW(),
    constraint FKSolve_ownerId foreign key (ownerId)
-      references Person(id) on delete cascade on update cascade
+      references Person(id) on delete cascade on update cascade,
+   constraint FKSolve_cubeTypeId foreign key (cubeTypeId)
+      references CubeType(id) on delete cascade on update cascade
 );
 
 insert into CubeType values

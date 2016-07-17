@@ -45,6 +45,7 @@ app.use(function(req, res, next) {
 app.use('/Prss', require('./Routes/Account/Prss'));
 app.use('/Ssns', require('./Routes/Account/Ssns'));
 app.use('/Cbs', require('./Routes/Cubes/Cbs'));
+app.use('/Slvs', require('./Routes/Cubes/Slvs'));
 
 app.delete('/DB', function(req, res) {
 

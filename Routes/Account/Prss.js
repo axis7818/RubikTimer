@@ -2,6 +2,7 @@ var Express = require('express');
 var connections = require('../Connections.js');
 var Tags = require('../Validator.js').Tags;
 var router = Express.Router({caseSensitive: true});
+var async = require('async');
 router.baseURL = '/Prss';
 
 router.get('/', function(req, res) {
@@ -129,6 +130,52 @@ router.delete('/:id', function(req, res) {
          });
       });
    }
+});
+
+router.get('/:id/Slvs', function(request, response) {
+   if (request.validator.checkPrsOK(request.params.id)) {
+      connections.getConnection(response, function(cnn) {
+         var query = 'select * from Solve where ownerId = ?';
+         var params = [request.params.id];
+         cnn.query(query, params, function(err, result) {
+            response.json(result);
+            cnn.release();
+         });
+      });
+   }
+});
+
+router.get('/:id/Slvs/:slvId', function(request, response) {
+   var vld = request.validator;
+
+   connections.getConnection(response, function(cnn) {
+      async.waterfall([
+         // check person ok
+         function(callback) {
+            if (vld.checkPrsOK(request.params.id, callback)) {
+               callback();
+            }
+         },
+         function(callback) {
+            var query = 'select * from Solve where id = ? and ownerId = ?';
+            var params = [request.params.slvId, request.params.id];
+            cnn.query(query, params, callback);
+         },
+         function(result, fields, callback) {
+            var solve = result.length && result[0];
+            if (vld.check(solve, Tags.notFound, [], callback)) {
+               response.json(solve);
+               callback();
+            }
+         },
+      ], function(err, result) {
+         if (vld === err)
+            vld.closeResponse();
+         else if (vld.check(!err, Tags.queryFailed, [err]))
+            ;
+         cnn.release();
+      });
+   });
 });
 
 module.exports = router;
