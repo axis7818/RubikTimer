@@ -10,9 +10,14 @@ app.directive('solveHistory', ['$http', 'dialog', function(http, dialog) {
          scope.control = scope.control || {};
          scope.solveHistory = [];
 
-         scope.control.getHistory = function(user) {
+         scope.control.getHistory = function(user, cubeTypeId) {
             var request = '/Prss/' + user.id + '/Slvs';
-            return http.get(request).then(function(response) {
+            var queryParams = {};
+            if (cubeTypeId)
+               queryParams.cubeTypeId = cubeTypeId;
+            return http.get(request, {
+               params: queryParams,
+            }).then(function(response) {
                scope.solveHistory = response.data;
             }).catch(function(err) {
                console.log(err);

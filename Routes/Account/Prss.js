@@ -137,6 +137,11 @@ router.get('/:id/Slvs', function(request, response) {
       connections.getConnection(response, function(cnn) {
          var query = 'select * from Solve where ownerId = ?';
          var params = [request.params.id];
+         if (request.query.cubeTypeId) {
+            query += " and cubeTypeId = ?";
+            params.push(request.query.cubeTypeId); // assume correct value
+         }
+
          cnn.query(query, params, function(err, result) {
             response.json(result);
             cnn.release();

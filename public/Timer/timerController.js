@@ -9,11 +9,11 @@ app.controller('timerController', ['$scope', '$http', 'dialog', 'user', '$timeou
    scope.user = user;
    scope.historyPanel = {};
 
-   function refreshHistory() {
-      return scope.historyPanel.getHistory(scope.user);
+   scope.refreshHistory = function() {
+      return scope.historyPanel.getHistory(scope.user, scope.cubeTypeId);
    }
    timeout(function() {
-      refreshHistory();
+      scope.refreshHistory();
    }, 100);
 
    function saveSolve() {
@@ -23,7 +23,7 @@ app.controller('timerController', ['$scope', '$http', 'dialog', 'user', '$timeou
          cubeTypeId: scope.cubeTypeId,
       };
       http.post('/Slvs', slv).then(function(response) {
-         refreshHistory();
+         scope.refreshHistory();
       }).catch(function(err) {
          console.log(err);
       })

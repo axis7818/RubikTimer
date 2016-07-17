@@ -6,7 +6,7 @@
    </div>
    <div class="col-md-12">
       <p style="float: right; margin-right: 2em; margin-top: 1em;">
-         Cube Type: <select id="cubeTypeSelector" ng-model="cubeTypeId" ng-options="type.id as type.name for type in cubeTypes" ng-change="newScramble()"></select>
+         Cube Type: <select id="cubeTypeSelector" ng-model="cubeTypeId" ng-options="type.id as type.name for type in cubeTypes" ng-change="newScramble() && refreshHistory();"></select>
       </p>
       <div class="panel panel-default">
          <div class="panel-heading">
