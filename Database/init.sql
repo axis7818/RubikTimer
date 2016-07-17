@@ -13,20 +13,33 @@ create table Person (
     UNIQUE KEY(email)
 );
 
-create table SolveGroup (
+create table CubeType (
    id int(11) AUTO_INCREMENT primary key,
+   name varchar(30) not null,
+   scrambleLength int(11) not null default 25
+);
+
+create table SolveGroup (
+   id int(11) primary key,
    numSolves int(11) not null default 5,
    ownerId int(11) not null,
-   cubeType int(11) not null default 0,
+   cubeTypeId int(11) not null,
    constraint FKSolveGroup_ownerId foreign key(ownerId)
-      references Person(id) on delete cascade on update cascade
+      references Person(id) on delete cascade on update cascade,
+   constraint FKSolveGroup_cubeTypeId foreign key(cubeTypeId)
+      references CubeType(id) on delete cascade on update cascade
 );
 
 create table Solve (
    id int(11) AUTO_INCREMENT primary key,
    groupId int(11) not null,
-   scramble VARCHAR(200) not null,
+   scramble VARCHAR(2048) not null,
    time TIME not null default '00:00:00',
    constraint FKSolve_groupId foreign key (groupId)
       references SolveGroup(id) on delete cascade on update cascade
 );
+
+insert into CubeType values
+   (1, "3x3", 25),
+   (2, "4x4", 40),
+   (3, "5x5", 60);

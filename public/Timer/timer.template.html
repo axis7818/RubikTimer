@@ -5,6 +5,17 @@
       </div>
    </div>
    <div class="col-md-12">
-      <p>An online Rubik's Cube Timer</p>
+
+      Cube Type: <select id="cubeTypeSelector" ng-model="cubeTypeId" ng-options="type.id as type.name for type in cubeTypes" ng-change="newScramble()"></select>
+
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <h4>Scramble</h4>
+         </div>
+         <div class="panel-body">
+            <p ng-bind-html="scramble"></p>
+         </div>
+      </div>
+
    </div>
 </div>
