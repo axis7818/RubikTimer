@@ -8,6 +8,7 @@ app.controller('timerController', ['$scope', '$http', 'dialog', function(scope, 
    scope.stopwatch = {};
 
    var ignoreUp = false;
+   var ignoreDown = true;
    document.addEventListener("keyup", function(event) {
       if (!ignoreUp && !scope.stopwatch.on && event.keyCode === 32) {
          scope.stopwatch.start();
@@ -15,12 +16,13 @@ app.controller('timerController', ['$scope', '$http', 'dialog', function(scope, 
       ignoreUp = false;
    }, false);
    document.addEventListener("keydown", function(event) {
-      if (scope.stopwatch.on && event.keyCode === 32) {
+      if (!ignoreDown && scope.stopwatch.on && event.keyCode === 32) {
          ignoreUp = true;
          scope.solveTime = scope.stopwatch.stop();
          console.log("Time: " + scope.solveTime + "ms");
          scope.newScramble();
       }
+      ignoreDown = false;
    }, false);
 
 

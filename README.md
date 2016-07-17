@@ -21,12 +21,6 @@ A Rubik's Cube timer web app that allows users to practice solving Rubik's Cubes
 - <b>name</b>: The name of the cube
 - <b>scrambleLength</b>: The number of moves in a standard scramble
 
-### SolveGroup
-- <b>id</b>: a unique identifier
-- <b>numSolves</b>: the number of solves associated with the SolveGroup
-- <b>ownerId</b>: foreign key to the person who owns this SolveGroup
-- <b>cubeType</b>: the type of cube used in this SolveGroup. 1=3x3, 2=4x4, 3=5x5
-
 ### Solve
 - <b>id</b>: a unique identifier
 - <b>groupId</b>: the id of the SolveGroup that this solve belongs to

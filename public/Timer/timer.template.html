@@ -5,11 +5,9 @@
       </div>
    </div>
    <div class="col-md-12">
-
       <p style="float: right; margin-right: 2em; margin-top: 1em;">
          Cube Type: <select id="cubeTypeSelector" ng-model="cubeTypeId" ng-options="type.id as type.name for type in cubeTypes" ng-change="newScramble()"></select>
       </p>
-
       <div class="panel panel-default">
          <div class="panel-heading">
             <button class="btn btn-primary" ng-click="newScramble();">
@@ -17,17 +15,56 @@
                Refresh Scramble
             </button>
          </div>
-
          <div class="panel-body">
-            <p ng-bind-html="scramble"></p>
+            <b>
+               <p ng-bind-html="scramble"></p>
+            </b>
          </div>
       </div>
 
-      <div style="text-align: center;">
-         <h1 style="font-size: 6em;">
-            <stopwatch bind-to="solveTime" control="stopwatch"></stopwatch>
-         </h1>
-         <p>Press the spacebar to start/stop the timer</p>
+      <div class="row">
+         <div class="col-md-8">
+            <div class="panel panel-primary" style="text-align: center;">
+               <h1 style="font-size: 6em;">
+                  <stopwatch bind-to="solveTime" control="stopwatch"></stopwatch>
+               </h1>
+               <div class="panel-footer">
+                  <p>Press the spacebar to start/stop the timer</p>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4">
+            <h2>History</h2>
+         </div>
+
+         <div class="col-md-8">
+            <div class="row">
+               <div class="col-md-12">
+                  <table class="table">
+                     <th colspan="2">
+                        <h3>Statistics</h3>
+                     </th>
+                     <tr>
+                        <td>Personal Record</td>
+                        <td>RECORD HERE</td>
+                     </tr>
+                     <tr>
+                        <td>Average</td>
+                        <td>AVERAGE HERE</td>
+                     </tr>
+                     <tr>
+                        <td>Last 5 Avg</td>
+                        <td>LAST 5 AVG</td>
+                     </tr>
+                     <tr>
+                        <td>Last 10 Avg</td>
+                        <td>LAST 10 AVG</td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+         </div>
       </div>
+
    </div>
 </div>
