@@ -1,0 +1,6 @@
+{
+    "host": "localhost",
+    "user": "chs",
+    "password": "chs_pwd",
+    "database": "RubikDB"
+}
