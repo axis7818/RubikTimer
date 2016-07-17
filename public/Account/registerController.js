@@ -1,4 +1,4 @@
-app.controller('registerController', ['$scope', '$http', '$state', function(scope, http, state) {
+app.controller('registerController', ['$scope', '$http', '$state', 'dialog', function(scope, http, state, dialog) {
    window.registerScope = scope;
    scope.email = '';
    scope.firstName = '';
@@ -18,7 +18,11 @@ app.controller('registerController', ['$scope', '$http', '$state', function(scop
       }).success(function(response) {
          state.go('login');
       }).catch(function(err) {
-         console.log(err);
+         var body = dialog.makeErrorBody(err.data || err);
+         var header = "Could Not Register";
+         dialog.notify(scope, body, header, true).catch(function() {
+            state.go('home');
+         });
       });
    };
 }]);
