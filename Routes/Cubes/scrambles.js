@@ -8,15 +8,23 @@ function cubeScramble(length, dim) {
    var sideLen = Math.floor(dim / 2);
 
    var result = [];
+   var last = 'X';
    for (var i = 0; i < length; i++) {
-      var move = edges[Math.floor(Math.random() * edges.length)];
+      var move = last;
+      while (move === last)
+         move = edges[Math.floor(Math.random() * edges.length)];
+      last = move;
+
       var depth = Math.ceil(Math.random() * sideLen);
       if (depth > 1)
          move += "<sub>" + depth + "</sub>";
-      if (Math.random() >= 0.5)
-         move += "2";
-      if (Math.random() >= 0.5)
+
+      var rand = Math.random();
+      if (rand <= 0.33)
          move += "'";
+      else if (rand <= 0.66)
+         move += "2";
+
       result[i] = move;
    }
    return result.join(' ');
