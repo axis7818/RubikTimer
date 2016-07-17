@@ -1,4 +1,4 @@
-app.controller('loginController', ['$scope', '$http', function(scope, http) {
+app.controller('loginController', ['$scope', '$http', '$state', function(scope, http, state) {
    window.loginScope = scope;
    scope.email = '';
    scope.password = '';
@@ -8,7 +8,7 @@ app.controller('loginController', ['$scope', '$http', function(scope, http) {
          email: scope.email,
          password: scope.password,
       }).success(function(response) {
-         console.log("Login success!");
+         state.go('timer');
       })
    };
 }]);

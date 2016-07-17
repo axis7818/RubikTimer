@@ -14,5 +14,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ro
       url: '/register',
       templateUrl: 'Account/register.template.html',
       controller: 'registerController',
+   }).state('timer', {
+      url: '/timer',
+      templateUrl: 'Timer/timer.template.html',
+      controller: 'timerController',
    });
 }]);

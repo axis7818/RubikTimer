@@ -1,4 +1,4 @@
-app.controller('registerController', ['$scope', function(scope) {
+app.controller('registerController', ['$scope', '$http', '$state', function(scope, http, state) {
    window.registerScope = scope;
    scope.email = '';
    scope.firstName = '';
@@ -8,6 +8,17 @@ app.controller('registerController', ['$scope', function(scope) {
    scope.termsAccepted = false;
 
    scope.register = function() {
-      console.log("registering...");
+      http.post("/Prss", {
+         email: scope.email,
+         firstName: scope.firstName,
+         lastName: scope.lastName,
+         password: scope.password,
+         role: scope.role,
+         termsAccepted: scope.termsAccepted,
+      }).success(function(response) {
+         state.go('login');
+      }).catch(function(err) {
+         console.log(err);
+      });
    };
 }]);
