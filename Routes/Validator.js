@@ -19,11 +19,6 @@ Validator.Tags = {
    noTerms: "noTerms",              // Acceptance of terms is required.
    noOldPwd: "noOldPwd",            // Change of password requires an old password
    dupName: "dupName",              // Name duplicates an existing Challenge Name
-   incompAttempt: "incompAttempt",  // Standing Attempt
-   badChlName: "badChlName",        // Bad Challenge Name
-   attNotClosable: "attNotClosable",// Attempt not in a closable state
-   attClosed: "attClosed",          // Attempt is alread closed
-   excessAtts: "excessAtts",        // Too many attempts for this challenge.
    oldPwdMismatch: "oldPwdMismatch",// Incorrect old password.
    queryFailed: "queryFailed",      // Indicates a problem with a query
    dupEntity: "dupEntity",          // An entity with these parameters is already in the DB.
@@ -69,14 +64,6 @@ Validator.prototype.checkAdmin = function(callback) {
     Validator.Tags.noPermission, [], callback);
 }
 
-Validator.prototype.checkTeacher = function(callback) {
-   return this.check(this.session && this.session.isTeacher(), Validator.Tags.noPermission, [], callback);
-}
-
-Validator.prototype.checkTeacherOrAdmin = function (callback) {
-   var check = this.session && (this.session.isTeacher() || this.session.isAdmin());
-   return this.check(check, Validator.Tags.noPermission, [], callback);
-};
 
 // Validate that AU is the specified person or is an admin
 Validator.prototype.checkPrsOK = function(prsId, callback) {
