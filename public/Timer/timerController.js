@@ -4,6 +4,25 @@ app.controller('timerController', ['$scope', '$http', 'dialog', function(scope, 
    scope.cubeTypeId = 1;
    scope.scrambleLength = 0;
    scope.scramble = "";
+   scope.solveTime = 0;
+   scope.stopwatch = {};
+
+   var ignoreUp = false;
+   document.addEventListener("keyup", function(event) {
+      if (!ignoreUp && !scope.stopwatch.on && event.keyCode === 32) {
+         scope.stopwatch.start();
+      }
+      ignoreUp = false;
+   }, false);
+   document.addEventListener("keydown", function(event) {
+      if (scope.stopwatch.on && event.keyCode === 32) {
+         ignoreUp = true;
+         scope.solveTime = scope.stopwatch.stop();
+         console.log("Time: " + scope.solveTime + "ms");
+         scope.newScramble();
+      }
+   }, false);
+
 
    scope.currentCube = function() {
       return scope.cubeTypes.find(function(cube) {

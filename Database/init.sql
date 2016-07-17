@@ -34,7 +34,7 @@ create table Solve (
    id int(11) AUTO_INCREMENT primary key,
    groupId int(11) not null,
    scramble VARCHAR(2048) not null,
-   time TIME not null default '00:00:00',
+   time int(11) not null default 0,
    constraint FKSolve_groupId foreign key (groupId)
       references SolveGroup(id) on delete cascade on update cascade
 );

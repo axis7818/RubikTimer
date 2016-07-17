@@ -20,6 +20,7 @@ app.use(function(req, res, next) {
 
 // Static paths to be served like index.html and all client side js
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bower_components', express.static(path.join(__dirname + '/bower_components')));
 
 // Parse all request bodies using JSON
 app.use(bodyParser.json());
