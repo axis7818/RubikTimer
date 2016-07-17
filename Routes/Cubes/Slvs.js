@@ -28,13 +28,47 @@ router.post('/', function(request, response) {
             }
          },
          function(result, fields, callback) {
-            response.location("/Prss/" + request.session.id + "/Slvs/" + result.insertId).send();
+            var loc = "/Prss/" + request.session.id + "/Slvs/" + result.insertId;
+            response.location(loc).send();
             callback();
          },
       ], function(err, result) {
          if (vld === err) {
             vld.closeResponse();
          }
+         else if (vld.check(!err, Tags.queryFailed, [err]))
+            ;
+         cnn.release();
+      });
+   });
+});
+
+router.delete('/:id', function(request, response) {
+   var vld = request.validator;
+
+   connections.getConnection(response, function(cnn) {
+      async.waterfall([
+         function(callback) {
+            var query = 'select * from Solve where id = ?';
+            var params = [request.params.id];
+            cnn.query(query, params, callback);
+         },
+         function(result, fields, callback) {
+            var solve = result.length && result[0];
+            if (vld.check(solve, Tags.notFound, [], callback)
+             && vld.checkPrsOK(solve.ownerId, callback)) {
+               var query = "delete from Solve where id = ?";
+               var params = [request.params.id];
+               cnn.query(query, params, callback);
+            }
+         },
+         function(result, fields, callback) {
+            response.send();
+            callback();
+         },
+      ], function(err, result) {
+         if (vld === err)
+            vld.closeResponse();
          else if (vld.check(!err, Tags.queryFailed, [err]))
             ;
          cnn.release();

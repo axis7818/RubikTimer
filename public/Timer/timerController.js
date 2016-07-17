@@ -1,4 +1,4 @@
-app.controller('timerController', ['$scope', '$http', 'dialog', function(scope, http, dialog) {
+app.controller('timerController', ['$scope', '$http', 'dialog', 'user', '$timeout', function(scope, http, dialog, user, timeout) {
    window.timerScope = scope;
    scope.cubeTypes = [];
    scope.cubeTypeId = 1;
@@ -6,7 +6,30 @@ app.controller('timerController', ['$scope', '$http', 'dialog', function(scope, 
    scope.scramble = "";
    scope.solveTime = 0;
    scope.stopwatch = {};
+   scope.user = user;
+   scope.historyPanel = {};
 
+   function refreshHistory() {
+      return scope.historyPanel.getHistory(scope.user);
+   }
+   timeout(function() {
+      refreshHistory();
+   }, 100);
+
+   function saveSolve() {
+      var slv = {
+         scramble: scope.scramble.split("&nbsp;").join(''),
+         time: scope.solveTime,
+         cubeTypeId: scope.cubeTypeId,
+      };
+      http.post('/Slvs', slv).then(function(response) {
+         refreshHistory();
+      }).catch(function(err) {
+         console.log(err);
+      })
+   }
+
+   // stopwatch control
    var ignoreUp = false;
    var ignoreDown = true;
    document.addEventListener("keyup", function(event) {
@@ -19,12 +42,11 @@ app.controller('timerController', ['$scope', '$http', 'dialog', function(scope, 
       if (!ignoreDown && scope.stopwatch.on && event.keyCode === 32) {
          ignoreUp = true;
          scope.solveTime = scope.stopwatch.stop();
-         console.log("Time: " + scope.solveTime + "ms");
+         saveSolve();
          scope.newScramble();
       }
       ignoreDown = false;
    }, false);
-
 
    scope.currentCube = function() {
       return scope.cubeTypes.find(function(cube) {

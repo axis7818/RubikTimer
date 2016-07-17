@@ -11,6 +11,17 @@ app.service("dialog", ["$uibModal", function(modal) {
          }).result;
       },
 
+      confirm: function(scope, body, header) {
+         scope.bodyContent = body;
+         scope.header = header;
+         scope.showCancel = true;
+         return modal.open({
+            templateUrl: 'Utils/dialog.template.html',
+            scope: scope,
+            size: 'sm',
+         }).result;
+      },
+
       makeErrorBody: function(err) {
          var elem;
          if (Array.isArray(err)) {

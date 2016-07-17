@@ -15,8 +15,15 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ro
       templateUrl: 'Account/register.template.html',
       controller: 'registerController',
    }).state('timer', {
-      url: '/timer',
+      url: '/timer/{prsId}',
       templateUrl: 'Timer/timer.template.html',
       controller: 'timerController',
+      resolve: {
+         user: ['$q', '$http', '$stateParams', function($q, http, stateParams) {
+            return http.get('/Prss/' + stateParams.prsId).then(function(response) {
+               return $q.resolve(response.data);
+            });
+         }],
+      }
    });
 }]);
