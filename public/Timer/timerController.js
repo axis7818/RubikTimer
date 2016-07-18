@@ -7,13 +7,26 @@ app.controller('timerController', ['$scope', '$http', 'dialog', 'user', '$timeou
    scope.solveTime = 0;
    scope.stopwatch = {};
    scope.user = user;
-   scope.historyPanel = {};
+   scope.historyPanel = {
+      refresh: function() {
+         scope.refreshStats();
+      },
+   };
+   scope.stats = {
+      pr: 0,
+      avg: 0,
+      avg_5: 0,
+      avg_10: 0,
+   }
 
    scope.refreshHistory = function() {
       return scope.historyPanel.getHistory(scope.user, scope.cubeTypeId);
    }
+   scope.refreshStats = function() {
+      scope.stats = scope.historyPanel.getStats();
+   }
    timeout(function() {
-      scope.refreshHistory();
+      scope.refreshHistory().then(scope.refreshStats);
    }, 100);
 
    function saveSolve() {
@@ -23,7 +36,7 @@ app.controller('timerController', ['$scope', '$http', 'dialog', 'user', '$timeou
          cubeTypeId: scope.cubeTypeId,
       };
       http.post('/Slvs', slv).then(function(response) {
-         scope.refreshHistory();
+         scope.refreshHistory().then(scope.refreshStats);
       }).catch(function(err) {
          console.log(err);
       })

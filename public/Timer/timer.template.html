@@ -6,7 +6,7 @@
    </div>
    <div class="col-md-12">
       <p style="float: right; margin-right: 2em; margin-top: 1em;">
-         Cube Type: <select id="cubeTypeSelector" ng-model="cubeTypeId" ng-options="type.id as type.name for type in cubeTypes" ng-change="newScramble() && refreshHistory();"></select>
+         Cube Type: <select id="cubeTypeSelector" ng-model="cubeTypeId" ng-options="type.id as type.name for type in cubeTypes" ng-change="newScramble() && refreshHistory().then(refreshStats);"></select>
       </p>
       <div class="panel panel-default">
          <div class="panel-heading">
@@ -41,19 +41,19 @@
                      </th>
                      <tr>
                         <td>Personal Record</td>
-                        <td>RECORD HERE</td>
+                        <td>{{ stats.pr || "N/A" | date:'mm:ss.sss' }}</td>
                      </tr>
                      <tr>
                         <td>Average</td>
-                        <td>AVERAGE HERE</td>
+                        <td>{{ stats.avg || "N/A" | date:'mm:ss.sss' }}</td>
                      </tr>
                      <tr>
                         <td>Last 5 Avg</td>
-                        <td>LAST 5 AVG</td>
+                        <td>{{ stats.avg_5 || "N/A" | date:'mm:ss.sss' }}</td>
                      </tr>
                      <tr>
                         <td>Last 10 Avg</td>
-                        <td>LAST 10 AVG</td>
+                        <td>{{ stats.avg_10 || "N/A" | date:'mm:ss.sss' }}</td>
                      </tr>
                   </table>
                </div>

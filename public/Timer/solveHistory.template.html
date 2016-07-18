@@ -9,7 +9,7 @@
    </div>
    <div class="col-xs-12">
       <table class="table">
-         <tr ng-repeat="solve in solveHistory | orderBy:'-whenSolved'">
+         <tr ng-repeat="solve in solveHistory">
             <td>{{ $index + 1 }}</td>
             <td>{{ solve.time | date:'mm:ss.sss' }}</td>
             <td>
