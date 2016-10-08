@@ -11,3 +11,10 @@ app.filter("cubeType", function() {
       return types[input];
    };
 });
+
+app.directive("securityWarning", function() {
+   return {
+      restrict: 'E',
+      templateUrl: "securityWarning.template.html",
+   };
+});
